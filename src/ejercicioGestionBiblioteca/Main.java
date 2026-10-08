@@ -33,8 +33,8 @@ public class Main{
 			int id = sc.nextInt();
 			System.out.println("");
 			System.out.print("titulo: ");
-			String titulo = sc.nextLine();
 			sc.nextLine();
+			String titulo = sc.nextLine();
 
 			buscarLibro(id, titulo);
 			break;
@@ -48,6 +48,6 @@ public class Main{
 	}
 
 	public static void buscarLibro(int id, String titulo) {
-		
+		Biblioteca.cargarLibros();
 	}
 }
