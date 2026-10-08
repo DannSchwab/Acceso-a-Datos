@@ -8,5 +8,16 @@ class Biblioteca {
 	Biblioteca() {
 		this.biblioteca = new ArrayList<Libro>();
 	}
+	
+	void cargarLibros(){
+		for (Libro libro : biblioteca) {
+			System.out.println(libro);
+		}
+	}
+
+	void guardarLibros(Libro libro){
+		
+	}
+	
 
 }

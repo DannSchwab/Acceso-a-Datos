@@ -1,6 +1,8 @@
 package ejercicioGestionBiblioteca;
 
-class Libro {
+import java.io.Serializable;
+
+class Libro implements Serializable {
 
 	private int id;
 	private String titulo;

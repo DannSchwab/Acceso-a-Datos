@@ -1,14 +1,8 @@
 package ejercicioGestionBiblioteca;
 
-import java.io.Serializable;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import java.util.Scanner;
-import java.io.ObjectInputStream.GetField;
-import java.util.ArrayList;
 
-public class Main implements Serializable{
+public class Main{
 
 	static Scanner sc = new Scanner(System.in);
 
@@ -40,7 +34,7 @@ public class Main implements Serializable{
 			System.out.println("");
 			System.out.print("titulo: ");
 			String titulo = sc.nextLine();
-			sc.nextInt();
+			sc.nextLine();
 
 			buscarLibro(id, titulo);
 			break;
