@@ -10,20 +10,20 @@ class Libro implements Serializable {
 	private float precio;
 	private boolean existe;
 
-	Libro(int id, String titulo, String autor, float precio, boolean existe) {
+	Libro(int id, String titulo, String autor, float precio) {
 		this.id = id;
 		this.titulo = titulo;
 		this.autor = autor;
 		this.precio = precio;
-		this.existe = existe;
+		this.existe = true;
 	}
 
-	Libro(int id, String titulo, float precio, boolean existe) {
+	Libro(int id, String titulo, float precio) {
 		this.id = id;
 		this.titulo = titulo;
 		this.autor = "anonimo";
 		this.precio = precio;
-		this.existe = existe;
+		this.existe = true;
 	}
 
 	public int getId() {
