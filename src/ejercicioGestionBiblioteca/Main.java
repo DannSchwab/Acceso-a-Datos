@@ -1,55 +1,59 @@
 package ejercicioGestionBiblioteca;
 
+import java.io.Serializable;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import java.util.Scanner;
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
-public class Main {
+public class Main implements Serializable{
 
 	static Scanner sc = new Scanner(System.in);
 
-		public static void main(String[] args) {
+	public static void main(String[] args) {
 
-			Biblioteca miBiblioteca = new Biblioteca();
+		Biblioteca miBiblioteca = new Biblioteca();
 
-			System.out.println("========================================");
-			System.out.println("====== Bienvenido a la Biblioteca ======");
-			System.out.println("========================================");
-			System.out.println("====== -1 Guardar libro ================");
-			System.out.println("====== -2 Buscar libro  ================");
-			System.out.println("====== -3 Salir         ================");
-			System.out.println("========================================");
+		System.out.println("========================================");
+		System.out.println("====== Bienvenido a la Biblioteca ======");
+		System.out.println("========================================");
+		System.out.println("====== -1 Guardar libro ================");
+		System.out.println("====== -2 Buscar libro  ================");
+		System.out.println("====== -3 Salir         ================");
+		System.out.println("========================================");
 
-			int opcion = sc.nextInt();
+		int opcion = sc.nextInt();
 
-			switch (opcion) {
+		switch (opcion) {
 
-			case 1:
-				System.out.println("Introduzca un id valido");
-				
-				break;
+		case 1:
+			System.out.println("Introduzca un id valido");
 
-			case 2:
-				System.out.println("Introduzca el título e id");
-				System.out.print("id: ");
-				int id = sc.nextInt();
-				sc.nextInt();
-				System.out.println("");
-				System.out.print("titulo: ");
-				String titulo = sc.nextLine();
+			break;
 
-				buscarLibro(id, titulo);
-				break;
+		case 2:
+			System.out.println("Introduzca el título e id");
+			System.out.print("id: ");
+			int id = sc.nextInt();
+			System.out.println("");
+			System.out.print("titulo: ");
+			String titulo = sc.nextLine();
+			sc.nextInt();
 
-			case 3:
-				System.out.println("");
-				break;
+			buscarLibro(id, titulo);
+			break;
 
-			}
+		case 3:
+			System.out.println("");
+			break;
 
 		}
 
-		public static void buscarLibro(int id, String titulo) {
-
-		}
 	}
+
+	public static void buscarLibro(int id, String titulo) {
+		
+	}
+}
