@@ -5,33 +5,60 @@ import java.util.ArrayList;
 
 class Biblioteca {
 
-	final String FICHERO = "";
+	static final String FICHERO = "libros.dat";
 	private ArrayList<Libro> biblioteca;
 
 	Biblioteca() {
-		this.biblioteca = cargarLibros(FICHERO);
+		this.biblioteca = cargarLibros();
+	}
+
+	void guardarLibros() {
+		try (ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+			escribir.writeObject(biblioteca);
+		}catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	Libro consultarLibro(int id){
+		for(Libro libro : biblioteca) {
+			if (id == libro.getId()) {
+				return libro;
+			}
+		}
+		return null;
 	}
 	
-	void mostrarLibros(){
+	void agregarLibro(Libro libro){
+		if(consultarLibro(libro.getId()) == null) {
+			biblioteca.add(libro);
+			guardarLibros();
+			System.out.println("Libro añadido");
+		}else {
+			System.out.println("El libro con el ID " + libro.getId() + " ya existe y no se puede agregar");			
+		}
+	}
+	
+	ArrayList<Libro> cargarLibros(){		
+		ArrayList<Libro> carga = new ArrayList<Libro>();
+		if (!new File(FICHERO).exists()) {
+		    return new ArrayList<Libro>();
+		}
+		try(ObjectInputStream escribir = new ObjectInputStream(new FileInputStream(FICHERO))){	
+			carga = (ArrayList<Libro>)escribir.readObject();
+			} catch (ClassNotFoundException e) {					
+				e.printStackTrace();
+			}catch(IOException ex){
+				ex.printStackTrace();
+			}
+			
+			return carga;			
+		}
+
+	void mostrarLibros() {
 		for (Libro libro : biblioteca) {
 			System.out.println(libro);
 		}
 	}
-
-	ArrayList<Libro> cargarLibros(String a){
-		ArrayList<Libro> carga = new ArrayList<Libro>();
-		try(ObjectOutputStream escribir = new ObjectOutputStream()){
-			
-		}catch(IOException e) {
-			
-		}
-		return carga;
-	}
-
-	void guardarLibros(Libro libro){
-		cargarLibros(FICHERO);
-		this.biblioteca.add(libro);
-	}
-	
 
 }
