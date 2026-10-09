@@ -25,13 +25,13 @@ public class Main {
 			switch (opcion) {
 			
 			case 1:
-				int id = 0;
-				System.out.print("Introduzca un id valido");
-				id = sc.nextInt();
+				System.out.print("Introduzca un id valido: ");
+				int id = sc.nextInt();
 				while (miBiblioteca.consultarLibro(id) != null) {
 					System.out.println("Este id ya existe");
-					System.out.print("Introduzca un id valido");
+					System.out.print("Introduzca un id valido: ");
 					id = sc.nextInt();
+					System.out.println("");
 				}
 				sc.nextLine();
 				System.out.println("");
@@ -43,11 +43,12 @@ public class Main {
 				System.out.println("");
 				System.out.print("Introdzuca el precio: ");
 				float precio = sc.nextFloat();
+				Libro libro;
 				if (autor.isEmpty()){
-					Libro libro = new Libro(id, titulo, precio);				
+					libro = new Libro(id, titulo, precio);				
 					miBiblioteca.agregarLibro(libro);
 				}else {
-					Libro libro = new Libro(id, titulo, autor, precio);				
+					libro = new Libro(id, titulo, autor, precio);				
 					miBiblioteca.agregarLibro(libro);
 				}
 				
@@ -68,6 +69,9 @@ public class Main {
 			case 3:
 				System.out.println("Adios");
 				seguir = false;
+				break;
+			default:
+				System.out.println("Sabes leer? 1, 2 o 3");				
 				break;
 			}	
 		}

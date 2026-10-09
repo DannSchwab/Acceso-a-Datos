@@ -12,7 +12,7 @@ class Biblioteca {
 		this.biblioteca = cargarLibros();
 	}
 
-	void guardarLibros() {
+	private void guardarLibros() {
 		try (ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(FICHERO))){
 			escribir.writeObject(biblioteca);
 		}catch (IOException ex) {
@@ -39,19 +39,20 @@ class Biblioteca {
 		}
 	}
 	
-	ArrayList<Libro> cargarLibros(){		
+	@SuppressWarnings("unchecked")
+	private ArrayList<Libro> cargarLibros(){		
 		ArrayList<Libro> carga = new ArrayList<Libro>();
 		if (!new File(FICHERO).exists()) {
 		    return new ArrayList<Libro>();
 		}
 		try(ObjectInputStream escribir = new ObjectInputStream(new FileInputStream(FICHERO))){	
 			carga = (ArrayList<Libro>)escribir.readObject();
+			escribir.close();
 			} catch (ClassNotFoundException e) {					
 				e.printStackTrace();
 			}catch(IOException ex){
 				ex.printStackTrace();
 			}
-			
 			return carga;			
 		}
 
