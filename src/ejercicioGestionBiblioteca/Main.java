@@ -67,9 +67,9 @@ public class Main {
 				
 			case 3:
 				System.out.println("Adios");
+				seguir = false;
 				break;
 			}	
 		}
 	}
-
 }
