@@ -1,13 +1,15 @@
 package ejercicioGestionBiblioteca;
 
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 class Biblioteca {
+	
+	final static String RUTA = "" ;
+	
 	private ArrayList<Libro> biblioteca;
 
 	Biblioteca() {
-		this.biblioteca = cargarLibros(/*Aquí iría el ObjectInputStream que no sé como implementar*/);
+		this.biblioteca = cargarLibros(RUTA);
 	}
 	
 	void mostrarLibros(){
@@ -16,7 +18,7 @@ class Biblioteca {
 		}
 	}
 
-	ArrayList<Libro> cargarLibros(ObjectInputStream ois){
+	ArrayList<Libro> cargarLibros(String a){
 		ArrayList<Libro> carga = new ArrayList<Libro>();
 		// La forma en la que se cargan los libros iria aquí 
 		return carga;
