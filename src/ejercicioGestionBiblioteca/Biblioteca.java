@@ -1,15 +1,15 @@
 package ejercicioGestionBiblioteca;
 
+import java.io.*;
 import java.util.ArrayList;
 
 class Biblioteca {
-	
-	final static String RUTA = "" ;
-	
+
+	final String FICHERO = "";
 	private ArrayList<Libro> biblioteca;
 
 	Biblioteca() {
-		this.biblioteca = cargarLibros(RUTA);
+		this.biblioteca = cargarLibros(FICHERO);
 	}
 	
 	void mostrarLibros(){
@@ -20,11 +20,16 @@ class Biblioteca {
 
 	ArrayList<Libro> cargarLibros(String a){
 		ArrayList<Libro> carga = new ArrayList<Libro>();
-		// La forma en la que se cargan los libros iria aquí 
+		try(ObjectOutputStream escribir = new ObjectOutputStream()){
+			
+		}catch(IOException e) {
+			
+		}
 		return carga;
 	}
 
 	void guardarLibros(Libro libro){
+		cargarLibros(FICHERO);
 		this.biblioteca.add(libro);
 	}
 	
