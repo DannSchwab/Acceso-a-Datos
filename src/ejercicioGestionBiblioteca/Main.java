@@ -38,19 +38,18 @@ public class Main {
 				System.out.print("Introduzca un titulo: ");
 				String titulo = sc.nextLine();
 				System.out.println("");
-				System.out.print("Introdzuca un autor: ");
+				System.out.print("Introduzca un autor: ");
 				String autor = sc.nextLine();
 				System.out.println("");
-				System.out.print("Introdzuca el precio: ");
+				System.out.print("Introduzca el precio: ");
 				float precio = sc.nextFloat();
 				Libro libro;
 				if (autor.isEmpty()){
 					libro = new Libro(id, titulo, precio);				
-					miBiblioteca.agregarLibro(libro);
 				}else {
 					libro = new Libro(id, titulo, autor, precio);				
-					miBiblioteca.agregarLibro(libro);
 				}
+				miBiblioteca.agregarLibro(libro);
 				
 				break;
 				
@@ -71,7 +70,7 @@ public class Main {
 				seguir = false;
 				break;
 			default:
-				System.out.println("Sabes leer? 1, 2 o 3");				
+				System.out.println("Opción no válida");				
 				break;
 			}	
 		}

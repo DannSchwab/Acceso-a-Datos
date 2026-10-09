@@ -45,9 +45,8 @@ class Biblioteca {
 		if (!new File(FICHERO).exists()) {
 		    return new ArrayList<Libro>();
 		}
-		try(ObjectInputStream escribir = new ObjectInputStream(new FileInputStream(FICHERO))){	
-			carga = (ArrayList<Libro>)escribir.readObject();
-			escribir.close();
+		try(ObjectInputStream lector = new ObjectInputStream(new FileInputStream(FICHERO))){	
+			carga = (ArrayList<Libro>)lector.readObject();
 			} catch (ClassNotFoundException e) {					
 				e.printStackTrace();
 			}catch(IOException ex){
