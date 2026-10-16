@@ -37,9 +37,9 @@ public class Main {
 			System.out.println("========= -3 Municipal     ======================");
 			System.out.println("=================================================");
 			
-			opcion = sc.nextInt();
 			
-		while (nombre == "") {
+		while (nombre.equals("")) {
+			opcion = sc.nextInt();
 			switch (opcion) {
 			case 1:
 				nombre = "Nacional";
