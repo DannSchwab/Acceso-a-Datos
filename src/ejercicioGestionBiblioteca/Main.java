@@ -148,8 +148,12 @@ public class Main {
 					System.out.print("Introduzca el id del libro que desea eliminar: ");
 					id = sc.nextInt();
 					System.out.println("");
-					System.out.println(biblioteca.consultarLibro(id).toString());
-					biblioteca.eliminarLibro((biblioteca.consultarLibro(id)));
+					if(biblioteca.consultarLibro(id) != null) {
+						System.out.println(biblioteca.consultarLibro(id).toString());
+						biblioteca.eliminarLibro((biblioteca.consultarLibro(id)));						
+					}else {
+						System.out.println("Id no encontrado");
+					}
 					break;
 					
 				case 5:

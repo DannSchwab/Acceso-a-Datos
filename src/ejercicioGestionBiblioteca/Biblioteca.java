@@ -16,74 +16,74 @@ class Biblioteca {
 	}
 
 	private void guardarLibros() {
-		try (ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+		try (ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(FICHERO))) {
 			escribir.writeObject(biblioteca);
-		}catch (IOException ex) {
+		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	Libro consultarLibro(int id){
-		for(Libro libro : biblioteca) {
+	Libro consultarLibro(int id) {
+		for (Libro libro : biblioteca) {
 			if (id == libro.getId()) {
 				return libro;
 			}
 		}
 		return null;
 	}
-	
-	void agregarLibro(Libro libro){
-		if(consultarLibro(libro.getId()) == null) {
+
+	void agregarLibro(Libro libro) {
+		if (consultarLibro(libro.getId()) == null) {
 			biblioteca.add(libro);
 			guardarLibros();
 			System.out.println("Libro añadido");
-		}else {
-			System.out.println("El libro con el ID " + libro.getId() + " ya existe y no se puede agregar");			
+		} else {
+			System.out.println("El libro con el ID " + libro.getId() + " ya existe y no se puede agregar");
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private ArrayList<Libro> cargarLibros(){		
+	private ArrayList<Libro> cargarLibros() {
 		ArrayList<Libro> carga = new ArrayList<Libro>();
 		if (!new File(FICHERO).exists()) {
-		    return new ArrayList<Libro>();
+			return new ArrayList<Libro>();
 		}
-		try(ObjectInputStream lector = new ObjectInputStream(new FileInputStream(FICHERO))){	
-			carga = (ArrayList<Libro>)lector.readObject();
-			} catch (ClassNotFoundException e) {					
-				e.printStackTrace();
-			}catch(IOException ex){
-				ex.printStackTrace();
-			}
-			return carga;			
+		try (ObjectInputStream lector = new ObjectInputStream(new FileInputStream(FICHERO))) {
+			carga = (ArrayList<Libro>) lector.readObject();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
+		return carga;
+	}
 
 	void mostrarLibros() {
 		for (Libro libro : biblioteca) {
-			if(libro.isExiste()) {
-				System.out.println(libro);				
+			if (libro.isExiste()) {
+				System.out.println(libro);
 			}
 		}
 	}
-	
-	void modificarLibro(Libro libro1, int opcion){
+
+	void modificarLibro(Libro libro1, int opcion) {
 		int nId;
 		boolean continuar = true;
 		for (int i = 0; i < this.biblioteca.size(); i++) {
-			if(this.biblioteca.get(i) == libro1) {
-				switch (opcion){
+			if (this.biblioteca.get(i) == libro1) {
+				switch (opcion) {
 				case 1:
 					do {
 						System.out.println("Introduzca un nuevo id");
 						nId = sc.nextInt();
-						if(consultarLibro(nId) == null) {
+						if (consultarLibro(nId) == null) {
 							this.biblioteca.get(i).setId(nId);
 							continuar = false;
-						}else {						
+						} else {
 							System.out.println("id ya existente");
 							continuar = true;
-						}						
-					}while (continuar); 
+						}
+					} while (continuar);
 					break;
 				case 2:
 					System.out.println("Introduzca un nuevo titulo:");
@@ -103,33 +103,29 @@ class Biblioteca {
 					System.out.println("Desea cambiarlo?");
 					System.out.println("y / n");
 					String respuesta = sc.nextLine().trim().toLowerCase();
-					if(respuesta.equals("y")) {
-						if(tE == true) {
-							this.biblioteca.get(i).setExiste(false);							
-						}else {							
-							this.biblioteca.get(i).setExiste(true);							
+					if (respuesta.equals("y")) {
+						if (tE == true) {
+							this.biblioteca.get(i).setExiste(false);
+						} else {
+							this.biblioteca.get(i).setExiste(true);
 						}
-					}else {
+					} else {
 						break;
 					}
 					break;
 				}
-				
+
 			}
 		}
 		guardarLibros();
 	}
-	
-	
+
 	void eliminarLibro(Libro libro1) {
-		if(libro1 != null) {
-			for (int i = 0; i < this.biblioteca.size(); i++) {
-				if(biblioteca.get(i) == libro1) {
-					biblioteca.get(i).setExiste(false);;
-				}
-			}			
-		}else{
-			System.out.println("No existe el libro");
+		for (int i = 0; i < this.biblioteca.size(); i++) {
+			if (biblioteca.get(i) == libro1) {
+				biblioteca.get(i).setExiste(false);
+				;
+			}
 		}
 		guardarLibros();
 	}
