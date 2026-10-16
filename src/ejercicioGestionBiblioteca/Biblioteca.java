@@ -11,8 +11,8 @@ class Biblioteca {
 	private ArrayList<Libro> biblioteca;
 
 	Biblioteca(String nombre) {
-		this.biblioteca = cargarLibros();
 		this.FICHERO = "Biblioteca" + nombre + "dat";
+		this.biblioteca = cargarLibros();
 	}
 
 	private void guardarLibros() {
@@ -76,8 +76,8 @@ class Biblioteca {
 					do {
 						System.out.println("Introduzca un nuevo id");
 						nId = sc.nextInt();
-						if(consultarLibro(nId) != null) {
-							this.biblioteca.get(i).setId(i);
+						if(consultarLibro(nId) == null) {
+							this.biblioteca.get(i).setId(nId);
 							continuar = false;
 						}else {						
 							System.out.println("id ya existente");
@@ -104,7 +104,7 @@ class Biblioteca {
 					System.out.println("y / n");
 					String respuesta = sc.nextLine().trim().toLowerCase();
 					if(respuesta.equals("y")) {
-						if(tE =true ) {
+						if(tE == true) {
 							this.biblioteca.get(i).setExiste(false);							
 						}else {							
 							this.biblioteca.get(i).setExiste(true);							
@@ -117,15 +117,21 @@ class Biblioteca {
 				
 			}
 		}
+		guardarLibros();
 	}
 	
 	
 	void eliminarLibro(Libro libro1) {
-		for (int i = 0; i < this.biblioteca.size(); i++) {
-			if(biblioteca.get(i) == libro1) {
-				biblioteca.get(i).setExiste(false);;
-			}
+		if(libro1 != null) {
+			for (int i = 0; i < this.biblioteca.size(); i++) {
+				if(biblioteca.get(i) == libro1) {
+					biblioteca.get(i).setExiste(false);;
+				}
+			}			
+		}else{
+			System.out.println("No existe el libro");
 		}
+		guardarLibros();
 	}
 
 }

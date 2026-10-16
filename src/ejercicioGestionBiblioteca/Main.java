@@ -18,8 +18,8 @@ public class Main {
 
 		ArrayList<Biblioteca> misBibliotecas = new ArrayList<Biblioteca>();
 		Biblioteca biblioteca1 = new Biblioteca("Nacional");
-		Biblioteca biblioteca3 = new Biblioteca("Provincial");
-		Biblioteca biblioteca2 = new Biblioteca("Municipal");
+		Biblioteca biblioteca2 = new Biblioteca("Provincial");
+		Biblioteca biblioteca3 = new Biblioteca("Municipal");
 		
 		misBibliotecas.add(biblioteca1);
 		misBibliotecas.add(biblioteca2);
