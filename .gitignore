@@ -2,4 +2,4 @@
 bin/
 
 # Datos que genera el programa al ejecutarse
-libros.dat
+*.dat
