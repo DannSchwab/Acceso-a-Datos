@@ -11,7 +11,7 @@ class Biblioteca {
 	private ArrayList<Libro> biblioteca;
 
 	Biblioteca(String nombre) {
-		this.FICHERO = "Biblioteca" + nombre + "dat";
+		this.FICHERO = "Biblioteca" + nombre + ".dat";
 		this.biblioteca = cargarLibros();
 	}
 

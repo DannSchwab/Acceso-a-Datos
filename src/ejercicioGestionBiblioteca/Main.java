@@ -39,6 +39,7 @@ public class Main {
 			
 			opcion = sc.nextInt();
 			
+		while (nombre == "") {
 			switch (opcion) {
 			case 1:
 				nombre = "Nacional";
@@ -52,7 +53,12 @@ public class Main {
 				nombre = "Municipal";
 				biblioteca = misBibliotecas.get(2);
 				break;
+			default :
+				System.out.println("Opcion no valida");
+				break;
 			}
+			
+		}
 			
 			
 			while(seguir2) {
