@@ -153,58 +153,294 @@
  * =====================================================================
  */
 
-
 package ejercicioPruebaExamen;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Refuerzo_UT1 {	
+public class Refuerzo_UT1 {
 
-	public static void main(String[]args) {
-		
-		Scanner sc = new Scanner(System.in);
+	static final String FICHERO = "productos.dat";
+	static final int LONG_NOMBRE = 25;
+	static final int TAM_REGISTRO = 4 + LONG_NOMBRE * 2 + 8;
+	static Scanner sc = new Scanner(System.in);
+
+	public static void main(String[] args) {
+
 		int opcion;
-		boolean seguir = false;
-		
-		System.out.println("=========================================");
-		System.out.println("===    1. Inventario de Productos     ===");
-		System.out.println("===    2. Agenda de contactos         ===");
-		System.out.println("===    3. Me rindo                    ===");
-		System.out.println("=========================================");
-		
-		opcion = sc.nextInt();		
-		sc.close();
-		do{
-			switch(opcion) {
-			
+		boolean seguir = true;
+
+		do {
+			System.out.println("=========================================");
+			System.out.println("===    1. Inventario de Productos     ===");
+			System.out.println("===    2. Agenda de contactos         ===");
+			System.out.println("===    3. Me rindo                    ===");
+			System.out.println("=========================================");
+			System.out.print("Elija una opcion: ");
+			opcion = leerNumeroEnteroValido();
+			switch (opcion) {
+
 			case 1:
 				manejarInventario();
-				seguir = false;
+				seguir = true;
 				break;
-				
+
 			case 2:
 				manejarAgendaContactos();
-				seguir = false;
+				seguir = true;
 				break;
-				
+
 			case 3:
 				System.out.println("Te entiendo macho");
 				seguir = false;
 				break;
-				
+
 			default:
 				System.out.println("Opcion no válida");
 				break;
-			}			
-		}while(seguir);
+			}
+		} while (seguir);
+
+		sc.close();
 	}
-	
+
 	public static void manejarInventario() {
-		
+
+		boolean seguir = true;
+		int codigo;
+		String nombre;
+		double precio;
+
+		int opcion = 0;
+
+		do {
+			System.out.println("");
+			System.out.println("1. Escribir producto");
+			System.out.println("2. Leer producto");
+			System.out.println("3. Actualizar precio");
+			System.out.println("4. Mostrar todos los productos");
+			System.out.println("5. Volver atrás");
+			System.out.print("Elija una opción: ");
+			opcion = leerNumeroEnteroValido();
+
+			switch (opcion) {
+			case 1:
+				boolean valido = false;
+				do {
+					do {
+						System.out.print("Introduzca un id valido: ");
+						codigo = leerNumeroEnteroValido();						
+					}while(codigo <= 0);
+					System.out.print("Introduzca el nombre del articulo: ");
+					StringBuilder sb = new StringBuilder(sc.nextLine());
+					while (sb.length() < LONG_NOMBRE) {
+						sb.append(' '); // rellenar con espacios
+					}
+					sb.setLength(LONG_NOMBRE);
+
+					nombre = sb.toString();
+					System.out.print("Introduzca el precio del articulo: ");
+					precio = leerNumeroDoubleValido();
+					valido = escribirProducto(codigo, nombre, precio);
+				} while (!valido);
+				break;
+			case 2:
+				System.out.print("Introduzca el id del producto que quiera leer: ");
+				codigo = leerNumeroEnteroValido();
+				leerProducto(codigo);
+				break;
+			case 3:
+				System.out.print("Introduzca el id del producto del que quiera actualizar el precio: ");
+				codigo = leerNumeroEnteroValido();
+				System.out.print("Introduzca el nuevo precio: ");
+				precio = leerNumeroDoubleValido();
+				modificarPrecio(codigo, precio);
+				break;
+			case 4:
+				mostrarTodosLosProductos();
+				break;
+			case 5:
+				seguir = false;
+				break;
+			default:
+				System.out.println("opción no valida");
+				break;
+			}
+		} while (seguir);
 	}
 
 	public static void manejarAgendaContactos() {
-		
+
+	}
+
+	public static int leerNumeroEnteroValido() {
+		int numero = 0;
+		boolean valido = false;
+		while(!valido) {
+			try {
+				numero = sc.nextInt();
+				sc.nextLine();
+				valido = true;
+			} catch (InputMismatchException e) {
+				System.out.println("Escribe un número compadre");
+				sc.nextLine();
+				valido = false;
+			}			
+		}
+		return numero;
 	}
 	
+	public static double leerNumeroDoubleValido() {
+		double numero = 0;
+		boolean valido = false;
+		while(!valido) {
+			try {
+				numero = sc.nextDouble();
+				sc.nextLine();
+				valido = true;
+			} catch (InputMismatchException e) {
+				System.out.println("Escribe un número compadre");
+				sc.nextLine();
+				valido = false;
+			}			
+		}
+		return numero;
+	}
+
+	
+	
+	public static boolean escribirProducto(int codigo, String nombre, double precio) {
+		boolean valido;
+		try (RandomAccessFile raf = new RandomAccessFile(FICHERO, "rw")) {
+			raf.seek((long) codigo * TAM_REGISTRO);
+			raf.writeInt(codigo);
+
+			for (int i = 0; i < LONG_NOMBRE; i++) {
+				raf.writeChar(nombre.charAt(i));
+			}
+
+			raf.writeDouble(precio);
+
+			System.out.println("Producto guardado. Longitud del fichero: " + raf.length() + " bytes");
+		} catch (FileNotFoundException e) {
+			System.out.println("Fichero no encontrado");
+			e.printStackTrace();
+			return valido = false;
+		} catch (IOException e) {
+			System.out.println("No se ha podido conectar con el fichero");
+			e.printStackTrace();
+			return valido = false;
+		}
+		return valido = true;
+	}
+
+	public static void leerProducto(int codigo) {
+
+		try (RandomAccessFile raf = new RandomAccessFile(FICHERO, "r")) {
+
+			long pos = ((long) codigo * TAM_REGISTRO);
+
+			if (codigo < 1 || pos + TAM_REGISTRO > raf.length()) {
+				System.out.println("Producto no encontrado.");
+				return;
+			}
+
+			raf.seek(pos);
+
+			int codigoLeido = raf.readInt();
+
+			// Si el hueco nunca se escribió, el ID almacenado no coincide
+			if (codigoLeido != codigo) {
+				System.out.println("Producto no encontrado.");
+				return;
+			}
+
+			char[] letras = new char[LONG_NOMBRE];
+			for (int i = 0; i < LONG_NOMBRE; i++) {
+				letras[i] = raf.readChar();
+			}
+
+			String nombre = new String(letras).trim();
+
+			double precio = raf.readDouble();
+
+			System.out.println("Producto " + codigoLeido + ": " + nombre + " · " + precio + " €");
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Fichero no encontrado");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("No se ha podido conectar con el fichero");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void modificarPrecio(int codigo, double precio) {
+
+		try (RandomAccessFile raf = new RandomAccessFile(FICHERO, "rw")) {
+			long pos = ((long) codigo * TAM_REGISTRO);
+
+			if (codigo < 1 || pos + TAM_REGISTRO > raf.length()) {
+				System.out.println("Producto no encontrado.");
+				return;
+			}
+
+			raf.seek(pos);
+			int codigoLeido = raf.readInt();
+			if (codigoLeido != codigo) {
+				System.out.println("Producto no encontrado.");
+				return;
+			}
+
+			long possPrecio = pos + (4 + LONG_NOMBRE * 2);
+			raf.seek(possPrecio);
+
+			raf.writeDouble(precio);
+
+			System.out.println("Precio actualizado con éxito");
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Fichero no encontrado");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("No se ha podido conectar con el fichero");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void mostrarTodosLosProductos() {
+
+		try (RandomAccessFile raf = new RandomAccessFile(FICHERO, "r")) {
+			int cantRegistros = (int) raf.length() / TAM_REGISTRO;
+
+			for (int i = 1; i < cantRegistros; i++) {
+				raf.seek(i * TAM_REGISTRO);
+				int codigoLeido = raf.readInt();
+
+				if (codigoLeido != 0) {
+					char[] letras = new char[LONG_NOMBRE];
+					for (int x = 0; x < LONG_NOMBRE; x++) {
+						letras[x] = raf.readChar();
+					}
+					String nombre = new String(letras).trim();
+					double precio = raf.readDouble();
+
+					System.out.println("Producto " + codigoLeido + ": " + nombre + " · " + precio + " €");
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Fichero no encontrado");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("No se ha podido conectar con el fichero");
+			e.printStackTrace();
+		}
+
+	}
 }
