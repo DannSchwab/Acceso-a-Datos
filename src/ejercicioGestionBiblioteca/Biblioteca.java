@@ -15,6 +15,20 @@ class Biblioteca {
 		this.biblioteca = cargarLibros();
 	}
 
+	
+	
+	public ArrayList<Libro> getBiblioteca() {
+		return biblioteca;
+	}
+
+
+
+	public void setBiblioteca(ArrayList<Libro> biblioteca) {
+		this.biblioteca = biblioteca;
+	}
+
+
+
 	private void guardarLibros() {
 		try (ObjectOutputStream escribir = new ObjectOutputStream(new FileOutputStream(FICHERO))) {
 			escribir.writeObject(biblioteca);
@@ -76,6 +90,7 @@ class Biblioteca {
 					do {
 						System.out.println("Introduzca un nuevo id");
 						nId = sc.nextInt();
+						sc.nextLine();
 						if (consultarLibro(nId) == null) {
 							this.biblioteca.get(i).setId(nId);
 							continuar = false;
@@ -96,6 +111,7 @@ class Biblioteca {
 				case 4:
 					System.out.println("Introduzca un nuevo precio:");
 					this.biblioteca.get(i).setPrecio(sc.nextFloat());
+					sc.nextLine();
 					break;
 				case 5:
 					boolean tE = this.biblioteca.get(i).isExiste();
