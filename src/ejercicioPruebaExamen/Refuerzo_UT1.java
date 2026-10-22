@@ -349,6 +349,7 @@ public class Refuerzo_UT1 {
 
 				Contacto eliminar = miAgenda.consultarContacto(codigo);
 				miAgenda.borrarContacto(eliminar);
+				System.out.println("Contacto Eliminado");
 
 				break;
 			case 4:
