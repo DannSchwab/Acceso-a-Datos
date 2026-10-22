@@ -298,14 +298,19 @@ public class Refuerzo_UT1 {
 				while(!seguir) {
 					System.out.print("Introduzca un id de contacto valido: ");
 					codigo = leerNumeroEnteroValido();
-					for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
-						int codigoLeido = miAgenda.getAgenda().get(i).getId();
-						if(codigoLeido == codigo) {
-							System.out.print("Id ya ocupado por otro contacto.");
-							seguir = false;
-						}else {
-							seguir = true;							
-						}
+					int size = miAgenda.getAgenda().size();
+					if(size != 0) {
+						for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
+							int codigoLeido = miAgenda.getAgenda().get(i).getId();
+							if(codigoLeido == codigo) {
+								System.out.print("Id ya ocupado por otro contacto.");
+								seguir = false;
+							}else {
+								seguir = true;							
+							}
+						}						
+					}else{
+						seguir = true;
 					}
 				}
 				System.out.print("Introduzco el nombre del contacto: ");
@@ -323,15 +328,20 @@ public class Refuerzo_UT1 {
 				while(!seguir) {
 					System.out.print("Introduzca un id de contacto valido: ");
 					codigo = leerNumeroEnteroValido();
-					for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
-						int codigoLeido = miAgenda.getAgenda().get(i).getId();
-						if(codigoLeido == codigo) {
-							System.out.print("Id ya ocupado por otro contacto.");
-							seguir = true;
-						}else {
-							System.out.println("No existe ningún contacto con este ide");
-							seguir = false;							
-						}
+					int size = miAgenda.getAgenda().size();
+					if(size != 0) {
+						for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
+							int codigoLeido = miAgenda.getAgenda().get(i).getId();
+							if(codigoLeido == codigo) {
+								System.out.print("Id ya ocupado por otro contacto.");
+								seguir = true;
+							}else {
+								seguir = false;							
+							}
+						}						
+					}else{
+						System.out.println("No existen contactos en la agenda");
+						break;
 					}
 				}
 				
