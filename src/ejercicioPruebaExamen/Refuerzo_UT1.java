@@ -274,6 +274,80 @@ public class Refuerzo_UT1 {
 
 	public static void manejarAgendaContactos() {
 
+		boolean seguir = false;
+		int codigo = 0;
+		String nombre;
+		long numero;
+
+		Agenda miAgenda = new Agenda();
+		
+		int opcion = 0;
+
+		do {
+			System.out.println("");
+			System.out.println("1. Agregar contacto");
+			System.out.println("2. Listar contactos");
+			System.out.println("3. Eliminar contacto");
+			System.out.println("4. Volver atrás");
+			System.out.print("Elija una opción: ");
+			
+			opcion = leerNumeroEnteroValido();
+			
+			switch (opcion) {
+			case 1:
+				while(!seguir) {
+					System.out.print("Introduzca un id de contacto valido: ");
+					codigo = leerNumeroEnteroValido();
+					for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
+						int codigoLeido = miAgenda.getAgenda().get(i).getId();
+						if(codigoLeido == codigo) {
+							System.out.print("Id ya ocupado por otro contacto.");
+							seguir = false;
+						}else {
+							seguir = true;							
+						}
+					}
+				}
+				System.out.print("Introduzco el nombre del contacto: ");
+				nombre = sc.nextLine();
+				System.out.print("Introduzca el número del contacto: ");
+				numero = leerNumeroLongValido();
+				System.out.print("");
+				Contacto contacto = new Contacto(codigo, nombre, numero);
+				miAgenda.agregarContacto(contacto);
+				break;
+			case 2:
+				miAgenda.mostrarContactos();
+				break;
+			case 3:
+				while(!seguir) {
+					System.out.print("Introduzca un id de contacto valido: ");
+					codigo = leerNumeroEnteroValido();
+					for(int i = 0; i < miAgenda.getAgenda().size(); i++) {
+						int codigoLeido = miAgenda.getAgenda().get(i).getId();
+						if(codigoLeido == codigo) {
+							System.out.print("Id ya ocupado por otro contacto.");
+							seguir = true;
+						}else {
+							System.out.println("No existe ningún contacto con este ide");
+							seguir = false;							
+						}
+					}
+				}
+				
+				Contacto eliminar = miAgenda.consultarContacto(codigo);
+				miAgenda.borrarContacto(eliminar);
+				
+				break;
+			case 4:
+				seguir = false;
+				break;
+			default:
+				System.out.println("Opcion no valida");
+				break;
+			}
+		}while(opcion !=4);
+		
 	}
 
 	public static int leerNumeroEnteroValido() {
@@ -310,6 +384,22 @@ public class Refuerzo_UT1 {
 		return numero;
 	}
 
+	public static long leerNumeroLongValido() {
+		long numero = 0;
+		boolean valido = false;
+		while(!valido) {
+			try {
+				numero = sc.nextLong();
+				sc.nextLine();
+				valido = true;
+			} catch (InputMismatchException e) {
+				System.out.println("Escribe un número compadre");
+				sc.nextLine();
+				valido = false;
+			}			
+		}
+		return numero;
+	}
 	
 	
 	public static boolean escribirProducto(int codigo, String nombre, double precio) {
